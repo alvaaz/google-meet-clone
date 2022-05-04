@@ -3,7 +3,7 @@ import type { ChangeEvent } from "react";
 import { useRef } from "react";
 import { useState, useEffect } from "react";
 import { requireUserId } from "~/utils/auth.server";
-import { jwt } from "twilio";
+// import { jwt } from "twilio";
 import { FormField } from "~/components/form-field";
 import TwilioVideo from "twilio-video";
 
@@ -48,46 +48,46 @@ const Video = ({ token }: { token: string }) => {
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const AccessToken = jwt.AccessToken;
-  const VideoGrant = AccessToken.VideoGrant;
+  // const AccessToken = jwt.AccessToken;
+  // const VideoGrant = AccessToken.VideoGrant;
 
-  const generateToken = () => {
-    return new AccessToken(
-      process.env.TWILIO_ACCOUNT_SID as string,
-      process.env.TWILIO_API_KEY_SID as string,
-      process.env.TWILIO_API_SECRET as string
-    );
-  };
+  // const generateToken = () => {
+  //   return new AccessToken(
+  //     process.env.TWILIO_ACCOUNT_SID as string,
+  //     process.env.TWILIO_API_KEY_SID as string,
+  //     process.env.TWILIO_API_SECRET as string
+  //   );
+  // };
 
-  const videoToken = (identity: any, room: any) => {
-    let videoGrant;
-    if (room) {
-      videoGrant = new VideoGrant({
-        room,
-      });
-    } else {
-      videoGrant = new VideoGrant();
-    }
-    const token = generateToken();
-    token.addGrant(videoGrant);
-    token.identity = identity;
-    return token;
-  };
+  // const videoToken = (identity: any, room: any) => {
+  //   let videoGrant;
+  //   if (room) {
+  //     videoGrant = new VideoGrant({
+  //       room,
+  //     });
+  //   } else {
+  //     videoGrant = new VideoGrant();
+  //   }
+  //   const token = generateToken();
+  //   token.addGrant(videoGrant);
+  //   token.identity = identity;
+  //   return token;
+  // };
 
-  const sendTokenResponse = (token: any) => {
-    const body = JSON.stringify({
-      token: token.toJwt(),
-    });
-    return new Response(body, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  };
+  // const sendTokenResponse = (token: any) => {
+  //   const body = JSON.stringify({
+  //     token: token.toJwt(),
+  //   });
+  //   return new Response(body, {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  // };
 
-  const token = videoToken("hola", "room");
+  // const token = videoToken("hola", "room");
 
-  sendTokenResponse(token);
+  // sendTokenResponse(token);
 
   await requireUserId(request);
   return null;
