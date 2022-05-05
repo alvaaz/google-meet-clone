@@ -1,8 +1,7 @@
 import Layout from "~/components/layout";
 import { FormField } from "~/components/form-field";
-import { Icon } from "~/components/icons";
 import type { ChangeEvent } from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { json, redirect } from "@remix-run/node";
 import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import {
@@ -96,7 +95,6 @@ export default function Login() {
   const actionData = useActionData();
   const [formError, setFormError] = useState(actionData?.error || "");
   const [errors, setErrors] = useState(actionData?.errors || {});
-  const firstLoad = useRef(true);
 
   const [formData, setFormData] = useState({
     email: actionData?.fields?.email || "",
@@ -115,23 +113,13 @@ export default function Login() {
     });
   };
 
-  useEffect(() => {
-    if (!firstLoad.current) {
-      setFormError("");
-    }
-  }, [formData]);
-
-  useEffect(() => {
-    firstLoad.current = false;
-  }, []);
-
   return (
     <Layout>
       <div className="max-w-md w-full space-y-8">
         <div>
           <img
             className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+            src="./logo.png"
             alt="Workflow"
           />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">

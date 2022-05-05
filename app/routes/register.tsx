@@ -1,6 +1,5 @@
 import Layout from "~/components/layout";
 import { FormField } from "~/components/form-field";
-import { Icon } from "~/components/icons";
 import type { ChangeEvent } from "react";
 import { useState, useEffect, useRef } from "react";
 import { json, redirect } from "@remix-run/node";
@@ -129,15 +128,11 @@ export default function Login() {
     <Layout>
       <div className="max-w-md w-full space-y-8">
         <div>
-          <img
-            className="mx-auto h-12 w-auto"
-            src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-            alt="Workflow"
-          />
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+          <img className="h-12 w-auto" src="./logo.png" alt="Workflow" />
+          <h2 className="mt-6 text-left text-3xl font-extrabold text-gray-900">
             Regístrate
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-left text-sm text-gray-600">
             Registrate para comenzar a usar Google Meet
           </p>
         </div>
