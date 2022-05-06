@@ -112,6 +112,7 @@ export default function Login() {
     event: ChangeEvent<HTMLInputElement>,
     field: string
   ) => {
+    setFormError("");
     setFormData({
       ...formData,
       [field]: event.target.value,
@@ -135,7 +136,11 @@ export default function Login() {
           </p>
         </div>
         <Form method="post" className="mt-8 space-y-6" reloadDocument>
-          <p>{formError}</p>
+          {formError && (
+            <div className="bg-red-200 p-4 rounded-lg">
+              <p className="text-red-800 text-sm font-medium">{formError}</p>
+            </div>
+          )}
           <FormField
             htmlFor="email"
             label="Email"
