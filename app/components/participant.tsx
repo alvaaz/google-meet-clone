@@ -80,8 +80,13 @@ export default function ParticipantVideo({
   }
 
   return (
-    <div>
-      <video ref={videoRef} playsInline autoPlay />
+    <div className="relative">
+      <video
+        className="h-full object-cover rounded-lg"
+        ref={videoRef}
+        playsInline
+        autoPlay
+      />
     </div>
   );
 }

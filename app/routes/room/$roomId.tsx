@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLoaderData, Link } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { requireUserId } from "~/utils/auth.server";
@@ -7,9 +7,10 @@ import { getToken } from "~/utils";
 import type { Participant } from "twilio-video";
 import ParticipantVideo from "~/components/participant";
 import Video from "twilio-video";
+import CallFooter from "~/components/call-footer";
+import { useRoomContext } from "~/context/RoomContext";
 
 export const loader: LoaderFunction = async ({ params, request }) => {
-  console.log(params, request, "request");
   return json({
     roomId: params.roomId,
     user: await requireUserId(request),
@@ -17,7 +18,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 };
 
 export default function RoomCall() {
-  const [room, setRoom] = useState<Video.Room | null>(null);
+  const { room, setRoom } = useRoomContext();
   const { roomId, user } = useLoaderData();
   const [participants, setParticipants] = useState<Participant[]>([]);
 
@@ -47,14 +48,46 @@ export default function RoomCall() {
   ));
 
   return (
-    <div>
-      {room && (
-        <>
-          <ParticipantVideo participant={room?.localParticipant} />
-          {remoteParticipants}
-        </>
-      )}
-      <Link to="/home">Salir</Link>
+    <div className="bg-gray-900 h-screen grid grid-rows-[auto_min-content]">
+      {/* {numberOfParticipants === 2 && (
+        <div className="p-8 h-full">
+          <div className="h-full relative">
+            <div className="absolute w-full h-full">
+              <img
+                className="w-full h-full object-cover rounded-lg"
+                src="https://cdn.stocksnap.io/img-thumbs/960w/family-portrait_PMFIFSSCHD.jpg"
+                alt=""
+              />
+              <span className="absolute left-4 bottom-4 text-white shadow-md z-10">
+                Tú
+              </span>
+            </div>
+            <div className="absolute right-4 bottom-4 w-3/12">
+              <img
+                className="object-cover rounded-lg"
+                src="https://cdn.stocksnap.io/img-thumbs/960w/family-portrait_PMFIFSSCHD.jpg"
+                alt=""
+              />
+              <span className="absolute left-4 bottom-4 text-white shadow-md z-10">
+                Tú
+              </span>
+            </div>
+          </div>
+        </div>
+      )} */}
+
+      <div className="p-8 h-full">
+        <div className="h-full overflow-hidden relative grid grid-cols-2 gap-8">
+          {room && (
+            <>
+              <ParticipantVideo participant={room?.localParticipant} />
+              {remoteParticipants}
+            </>
+          )}
+        </div>
+      </div>
+
+      <CallFooter />
     </div>
   );
 }
