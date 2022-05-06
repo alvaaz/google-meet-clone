@@ -134,28 +134,26 @@ export default function Login() {
             Inicia sesión para comenzar a usar Google Meet
           </p>
         </div>
-        <Form method="post" className="mt-8 space-y-6">
+        <Form method="post" className="mt-8 space-y-6" reloadDocument>
           <p>{formError}</p>
-          <div className="rounded-md shadow-sm">
-            <FormField
-              htmlFor="email"
-              label="Email"
-              placeholder="Ingresa tu email"
-              type="email"
-              value={formData.email}
-              onChange={(e) => handleInputChange(e, "email")}
-              error={errors?.email}
-            />
-            <FormField
-              htmlFor="password"
-              label="Contraseña"
-              placeholder="Ingresa tu contraseña"
-              type="password"
-              value={formData.password}
-              onChange={(e) => handleInputChange(e, "password")}
-              error={errors?.password}
-            />
-          </div>
+          <FormField
+            htmlFor="email"
+            label="Email"
+            placeholder="Ingresa tu email"
+            type="email"
+            value={formData.email}
+            onChange={(e) => handleInputChange(e, "email")}
+            error={errors?.email}
+          />
+          <FormField
+            htmlFor="password"
+            label="Contraseña"
+            placeholder="Ingresa tu contraseña"
+            type="password"
+            value={formData.password}
+            onChange={(e) => handleInputChange(e, "password")}
+            error={errors?.password}
+          />
 
           <Button
             htmlType="submit"

@@ -141,7 +141,7 @@ export default function Register() {
             Registrate para comenzar a usar Google Meet
           </p>
         </div>
-        <Form method="post" className="mt-8 space-y-6">
+        <Form method="post" className="mt-8 space-y-6" reloadDocument>
           <p>{formError}</p>
           <FormField
             htmlFor="email"

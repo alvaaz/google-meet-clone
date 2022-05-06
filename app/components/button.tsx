@@ -23,7 +23,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
-      htmlType={htmlType}
+      type={htmlType}
       name={name}
       value={value}
       className="disabled:opacity-50 group relative w-full flex justify-center py-3 px-4 border border-transparent font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-sm mb-4"
