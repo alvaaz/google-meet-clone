@@ -13,6 +13,7 @@ type ButtonProps = {
   value?: string;
   block?: boolean;
   type?: "primary" | "ghost";
+  className?: string;
 };
 
 export default function Button({
@@ -25,6 +26,7 @@ export default function Button({
   name,
   value,
   block,
+  className,
   type = "primary",
 }: ButtonProps) {
   const classes = (type: string) => {
@@ -40,7 +42,7 @@ export default function Button({
 
   if (href !== undefined) {
     return (
-      <Link className={classes(type)} to={href}>
+      <Link className={`${classes(type)} ${className}`} to={href}>
         {children}
       </Link>
     );
@@ -50,7 +52,7 @@ export default function Button({
       type={htmlType}
       name={name}
       value={value}
-      className={`${classes(type)} ${block && "w-full"}`}
+      className={`${classes(type)} ${block && "w-full"} ${className}`}
       disabled={disabled}
     >
       {loading && (

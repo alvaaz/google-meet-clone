@@ -982,6 +982,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   line-height: 1.75rem;
 }
 
+.text-2xl {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
 .font-medium {
   font-weight: 500;
 }
@@ -1173,9 +1178,23 @@ Ensure the default browser behavior of the `hidden` attribute.
     width: 66.666667%;
   }
 
+  .sm\:basis-auto {
+    flex-basis: auto;
+  }
+
   .sm\:px-6 {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+  }
+
+  .sm\:text-6xl {
+    font-size: 3.75rem;
+    line-height: 1;
+  }
+
+  .sm\:text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
   }
 }
 
@@ -1195,6 +1214,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   .md\:w-5\/6 {
     width: 83.333333%;
   }
+
+  .md\:text-5xl {
+    font-size: 3rem;
+    line-height: 1;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -1209,6 +1233,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  .lg\:text-6xl {
+    font-size: 3.75rem;
+    line-height: 1;
   }
 }
 

@@ -77,15 +77,15 @@ export default function Home() {
       </header>
       <main className="flex place-items-center">
         <div className="text-left md:w-5/6 lg:w-3/4 xl:w-1/2 max-w-2xl flex-wrap">
-          <h1 className="mt-6 text-6xl text-gray-900 mb-8">
+          <h1 className="mt-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gray-900 mb-8">
             Videollamadas gratis para todos.
           </h1>
           <p className="text-gray-600 text-xl mb-12">
             Hemos rediseñado nuestro servicio de reuniones seguras. Google Meet,
             para que todo el mundo pueda usarlo de forma gratuita.
           </p>
-          <form method="post" className="flex items-start gap-3">
-            <Button href="/room">
+          <form method="post" className="flex items-start gap-3 flex-wrap">
+            <Button href="/room" className="basis-full sm:basis-auto">
               <Icon name="video" className="w-6 h-6 stroke-white" />
               Nueva reunión
             </Button>
