@@ -4,7 +4,7 @@ import type { ChangeEvent } from "react";
 import { useState } from "react";
 import { requireUserId } from "~/utils/auth.server";
 import { FormField } from "~/components/form-field";
-import { useActionData } from "@remix-run/react";
+import { Form, useActionData } from "@remix-run/react";
 import Button from "~/components/button";
 import Icon from "~/components/icons/";
 
@@ -72,7 +72,10 @@ export default function Home() {
       <header className="py-4">
         <nav className="flex justify-between">
           <img className="w-10" src="./logo.png" alt="Logo Google Meet" />
-          <button>Salir</button>
+
+          <Form action="/logout" method="post">
+            <button type="submit">Salir</button>
+          </Form>
         </nav>
       </header>
       <main className="flex place-items-center">
