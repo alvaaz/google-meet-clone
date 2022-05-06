@@ -10,7 +10,7 @@ import {
   validatePassword,
 } from "~/utils/validator.server";
 import { login, register, getUser } from "~/utils/auth.server";
-import { Link, useActionData } from "@remix-run/react";
+import { Form, Link, useActionData, useTransition } from "@remix-run/react";
 
 export const loader: LoaderFunction = async ({ request }) => {
   return (await getUser(request)) ? redirect("/") : null;
@@ -95,6 +95,10 @@ export default function Login() {
   const actionData = useActionData();
   const [formError, setFormError] = useState(actionData?.error || "");
   const [errors, setErrors] = useState(actionData?.errors || {});
+  const transition = useTransition();
+  let processing =
+    transition.state === "submitting" &&
+    transition.submission.formData.get("_action") === "login";
 
   const [formData, setFormData] = useState({
     email: actionData?.fields?.email || "",
@@ -129,7 +133,7 @@ export default function Login() {
             Inicia sesión para comenzar a usar Google Meet
           </p>
         </div>
-        <form method="post" className="mt-8 space-y-6">
+        <Form method="post" className="mt-8 space-y-6">
           <p>{formError}</p>
           <div className="rounded-md shadow-sm">
             <FormField
@@ -151,17 +155,39 @@ export default function Login() {
               error={errors?.password}
             />
           </div>
-          <div>
-            <button
-              type="submit"
-              name="_action"
-              value="login"
-              className="disabled:opacity-50 group relative w-full flex justify-center py-3 px-4 border border-transparent font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-sm mb-4"
-            >
-              Iniciar sesión
-            </button>
-          </div>
-        </form>
+
+          <button
+            type="submit"
+            name="_action"
+            value="login"
+            disabled={processing}
+            className="disabled:opacity-50 group relative w-full flex justify-center py-3 px-4 border border-transparent font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-sm mb-4"
+          >
+            {processing && (
+              <svg
+                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            )}
+            {processing ? "Iniciando sesión..." : "Iniciar sesión"}
+          </button>
+        </Form>
         <p className="mt-2 text-center text-sm text-gray-600">
           ¿Aún no tienes una cuenta?{" "}
           <Link

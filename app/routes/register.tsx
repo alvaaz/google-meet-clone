@@ -10,7 +10,7 @@ import {
   validatePassword,
 } from "~/utils/validator.server";
 import { login, register, getUser } from "~/utils/auth.server";
-import { Link, useActionData } from "@remix-run/react";
+import { Form, Link, useActionData, useTransition } from "@remix-run/react";
 
 export const loader: LoaderFunction = async ({ request }) => {
   return (await getUser(request)) ? redirect("/") : null;
@@ -91,11 +91,15 @@ export const action: ActionFunction = async ({ request }) => {
   }
 };
 
-export default function Login() {
+export default function Register() {
   const actionData = useActionData();
   const [formError, setFormError] = useState(actionData?.error || "");
   const [errors, setErrors] = useState(actionData?.errors || {});
   const firstLoad = useRef(true);
+  const transition = useTransition();
+  let processing =
+    transition.state === "submitting" &&
+    transition.submission.formData.get("_action") === "register";
 
   const [formData, setFormData] = useState({
     email: actionData?.fields?.email || "",
@@ -136,55 +140,75 @@ export default function Login() {
             Registrate para comenzar a usar Google Meet
           </p>
         </div>
-        <form method="post" className="mt-8 space-y-6">
+        <Form method="post" className="mt-8 space-y-6">
           <p>{formError}</p>
-          <div className="rounded-md shadow-sm">
-            <FormField
-              htmlFor="email"
-              label="Email"
-              placeholder="Ingresa tu email"
-              type="email"
-              value={formData.email}
-              onChange={(e) => handleInputChange(e, "email")}
-              error={errors?.email}
-            />
-            <FormField
-              htmlFor="password"
-              label="Contraseña"
-              placeholder="Ingresa tu contraseña"
-              type="password"
-              value={formData.password}
-              onChange={(e) => handleInputChange(e, "password")}
-              error={errors?.password}
-            />
-            <FormField
-              htmlFor="firstName"
-              label="Nombre"
-              placeholder="Ingresa tu nombre"
-              value={formData.firstName}
-              onChange={(e) => handleInputChange(e, "firstName")}
-              error={errors?.firstName}
-            />
-            <FormField
-              htmlFor="lastName"
-              label="Apellido"
-              placeholder="Ingresa tu apellido"
-              value={formData.lastName}
-              onChange={(e) => handleInputChange(e, "lastName")}
-              error={errors?.lastName}
-            />
-          </div>
-          <div>
-            <button
-              type="submit"
-              name="_action"
-              value="register"
-              className="disabled:opacity-50 group relative w-full flex justify-center py-3 px-4 border border-transparent font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-sm mb-4"
-            >
-              Regístrate
-            </button>
-          </div>
-        </form>
+          <FormField
+            htmlFor="email"
+            label="Email"
+            placeholder="Ingresa tu email"
+            type="email"
+            value={formData.email}
+            onChange={(e) => handleInputChange(e, "email")}
+            error={errors?.email}
+          />
+          <FormField
+            htmlFor="password"
+            label="Contraseña"
+            placeholder="Ingresa tu contraseña"
+            type="password"
+            value={formData.password}
+            onChange={(e) => handleInputChange(e, "password")}
+            error={errors?.password}
+          />
+          <FormField
+            htmlFor="firstName"
+            label="Nombre"
+            placeholder="Ingresa tu nombre"
+            value={formData.firstName}
+            onChange={(e) => handleInputChange(e, "firstName")}
+            error={errors?.firstName}
+          />
+          <FormField
+            htmlFor="lastName"
+            label="Apellido"
+            placeholder="Ingresa tu apellido"
+            value={formData.lastName}
+            onChange={(e) => handleInputChange(e, "lastName")}
+            error={errors?.lastName}
+          />
+
+          <button
+            type="submit"
+            name="_action"
+            value="register"
+            className="disabled:opacity-50 group relative w-full flex justify-center py-3 px-4 border border-transparent font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-sm mb-4"
+            disabled={processing}
+          >
+            {processing && (
+              <svg
+                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            )}
+            {processing ? "Procesando..." : "Registrarse"}
+          </button>
+        </Form>
         <p className="mt-2 text-center text-sm text-gray-600">
           ¿Tienes una cuenta?{" "}
           <Link
