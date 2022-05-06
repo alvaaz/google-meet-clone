@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 
 type FormFieldProps = {
   htmlFor: string;
-  label: string;
+  label?: string;
   type?: string;
   value: any;
   onChange?: (...args: any) => any;
@@ -36,12 +36,14 @@ export function FormField({
 
   return (
     <div className="mb-4">
-      <label
-        htmlFor={htmlFor}
-        className="text-sm text-gray-700 font-medium mb-2 inline-block"
-      >
-        {label}
-      </label>
+      {label && (
+        <label
+          htmlFor={htmlFor}
+          className="text-sm text-gray-700 font-medium mb-2 inline-block"
+        >
+          {label}
+        </label>
+      )}
       <input
         ref={inputRef}
         onChange={handleChange}

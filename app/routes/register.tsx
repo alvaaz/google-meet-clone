@@ -187,6 +187,7 @@ export default function Register() {
             value="register"
             disabled={processing}
             loading={processing}
+            block={true}
           >
             Registrarse
           </Button>

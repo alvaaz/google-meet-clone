@@ -166,6 +166,7 @@ export default function Login() {
             value="login"
             disabled={processing}
             loading={processing}
+            block={true}
           >
             Iniciar sesión
           </Button>

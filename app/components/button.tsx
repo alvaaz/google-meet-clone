@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import React from "react";
 
 type ButtonProps = {
@@ -7,8 +8,11 @@ type ButtonProps = {
   href?: string;
   disabled?: boolean;
   htmlType?: "button" | "submit" | "reset";
+  buttonTypes?: "primary" | "ghost";
   name?: string;
   value?: string;
+  block?: boolean;
+  type?: "primary" | "ghost";
 };
 
 export default function Button({
@@ -20,13 +24,33 @@ export default function Button({
   htmlType,
   name,
   value,
+  block,
+  type = "primary",
 }: ButtonProps) {
+  const classes = (type: string) => {
+    switch (type) {
+      case "primary":
+        return "disabled:opacity-50 group relative flex justify-center py-3 px-4 border border-transparent font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-sm gap-2";
+      case "ghost":
+        return "disabled:opacity-50 group relative flex justify-center py-3 px-4 border border-transparent font-medium rounded-md text-indigo-700 hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-sm gap-2";
+      default:
+        return "disabled:opacity-50 group relative flex justify-center py-3 px-4 border border-transparent font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-sm";
+    }
+  };
+
+  if (href !== undefined) {
+    return (
+      <Link className={classes(type)} to={href}>
+        {children}
+      </Link>
+    );
+  }
   return (
     <button
       type={htmlType}
       name={name}
       value={value}
-      className="disabled:opacity-50 group relative w-full flex justify-center py-3 px-4 border border-transparent font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-sm mb-4"
+      className={`${classes(type)} ${block && "w-full"}`}
       disabled={disabled}
     >
       {loading && (
