@@ -8,16 +8,17 @@ import Video from "./Video";
 type Props = {
   name: "phone" | "camera" | "microphone" | "users" | "info" | "video";
   className: string;
+  off?: boolean;
 };
 
-export default function Icon({ name, className }: Props): JSX.Element {
+export default function Icon({ name, className, off }: Props): JSX.Element {
   switch (name) {
     case "phone":
       return <Phone className={className} />;
     case "camera":
-      return <Camera className={className} />;
+      return <Camera className={className} off={off} />;
     case "microphone":
-      return <Microphone className={className} />;
+      return <Microphone className={className} off={off} />;
     case "users":
       return <Users className={className} />;
     case "info":

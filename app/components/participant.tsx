@@ -3,8 +3,10 @@ import { trackpubsToTracks } from "~/utils";
 
 export default function ParticipantVideo({
   participant,
+  className,
 }: {
   participant: any;
+  className?: string;
 }) {
   const [isVideoEnabled, setIsVideoEnabled] = useState(true); // video status
   const [videoTracks, setVideoTracks] = useState<any>([]);
@@ -80,7 +82,7 @@ export default function ParticipantVideo({
   }
 
   return (
-    <div className="relative">
+    <div className={`relative ${className}`}>
       <video
         className="h-full object-cover rounded-lg"
         ref={videoRef}

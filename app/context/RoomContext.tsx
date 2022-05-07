@@ -1,13 +1,17 @@
 import type { FC, Dispatch, SetStateAction } from "react";
 import { useState, createContext, useContext } from "react";
 import type Video from "twilio-video";
+import type { Participant } from "twilio-video";
 
 type RoomState = {
   userVideo: boolean;
+  userAudio: boolean;
   toggleUserVideo: () => void;
   toggleUserAudio: () => void;
   room: Video.Room | null;
   setRoom: Dispatch<SetStateAction<Video.Room | null>>;
+  participantConnected: (participant: Participant) => void;
+  participants: Participant[];
 };
 
 function createCtx<RoomState>() {
@@ -26,6 +30,11 @@ export const RoomProvider: FC = ({ children }) => {
   const [room, setRoom] = useState<Video.Room | null>(null);
   const [userVideo, setUserVideo] = useState<boolean>(true);
   const [userAudio, setUserAudio] = useState<boolean>(true);
+  const [participants, setParticipants] = useState<Participant[]>([]);
+
+  const participantConnected = (participant: Participant) => {
+    setParticipants((prevParticipants) => [...prevParticipants, participant]);
+  };
 
   const toggleUserVideo = () => {
     if (!room || !room.localParticipant) return;
@@ -52,12 +61,21 @@ export const RoomProvider: FC = ({ children }) => {
         publication.track.enable();
       });
     }
-    setUserVideo(!userAudio);
+    setUserAudio(!userAudio);
   };
 
   return (
     <RoomContextProvider
-      value={{ userVideo, toggleUserVideo, room, setRoom, toggleUserAudio }}
+      value={{
+        userVideo,
+        toggleUserVideo,
+        room,
+        setRoom,
+        toggleUserAudio,
+        userAudio,
+        participantConnected,
+        participants,
+      }}
     >
       {children}
     </RoomContextProvider>
