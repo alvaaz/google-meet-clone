@@ -27,15 +27,17 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  const validateRoomId = (password: string): string | undefined => {
-    if (password.length < 5) {
-      return "Ingresa un ID de sala de al menos 5 caracteres.";
+  const validateRoomId = (roomId: string): string | undefined => {
+    if (roomId.length < 5) {
+      return "Requiere ID de 5 caracteres o más.";
     }
   };
 
   const errors = {
     roomId: validateRoomId(roomId),
   };
+
+  console.log(errors);
 
   if (Object.values(errors).some(Boolean))
     return json(
@@ -54,7 +56,7 @@ export default function Home() {
   const actionData = useActionData();
   const [errors, setErrors] = useState(actionData?.errors || {});
   const [formData, setFormData] = useState({
-    roomId: actionData?.fields?.email || "",
+    roomId: actionData?.fields?.roomId || "",
   });
 
   const handleInputChange = (
@@ -87,7 +89,12 @@ export default function Home() {
             Hemos rediseñado nuestro servicio de reuniones seguras. Google Meet,
             para que todo el mundo pueda usarlo de forma gratuita.
           </p>
-          <form method="post" className="flex items-start gap-3 flex-wrap">
+          <Form
+            method="post"
+            className="flex items-start gap-3 flex-wrap"
+            id="room-form"
+            reloadDocument
+          >
             <Button href="/room" className="basis-full sm:basis-auto">
               <Icon name="video" className="w-6 h-6 stroke-white" />
               Nueva reunión
@@ -101,11 +108,11 @@ export default function Home() {
               error={errors?.roomId}
             />
             {formData.roomId && (
-              <Button href="/room" type="ghost">
+              <Button htmlType="submit" type="ghost">
                 Unirme
               </Button>
             )}
-          </form>
+          </Form>
         </div>
       </main>
     </div>

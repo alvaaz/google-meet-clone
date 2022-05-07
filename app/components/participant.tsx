@@ -8,30 +8,19 @@ export default function ParticipantVideo({
   participant: any;
   className?: string;
 }) {
-  const [isVideoEnabled, setIsVideoEnabled] = useState(true); // video status
+  const [audioTracks, setAudioTracks] = useState<any>([]);
   const [videoTracks, setVideoTracks] = useState<any>([]);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    console.log(participant, "participant");
     setVideoTracks(trackpubsToTracks(participant.videoTracks));
+
     participant.on("trackSubscribed", (track: any) => {
-      trackDisabled(track);
-      trackEnabled(track);
       trackSubscribed(track);
     });
 
     participant.on("trackUnsubscribed", trackUnsubscribed);
-
-    participant.tracks.forEach((publication: any) => {
-      if (publication.track) {
-        trackDisabled(publication.track);
-        trackEnabled(publication.track);
-
-        publication.track.on("disabled", (track: any) => trackDisabled(track));
-        publication.track.on("enabled", (track: any) => trackEnabled(track));
-      }
-    });
 
     return () => {
       setVideoTracks([]);
@@ -49,12 +38,22 @@ export default function ParticipantVideo({
     }
   }, [videoTracks]);
 
+  useEffect(() => {
+    const audioTrack = audioTracks[0];
+    if (audioTrack) {
+      audioTrack.attach(audioRef.current);
+      return () => {
+        audioTrack.detach();
+      };
+    }
+  }, [audioTracks]);
+
   const trackSubscribed = (track: any) => {
     if (track.kind === "video") {
       setVideoTracks((videoTracks: any) => [...videoTracks, track]);
+    } else if (track.kind === "audio") {
+      setAudioTracks((audioTracks: any) => [...audioTracks, track]);
     }
-    track.on("disabled", (track: any) => trackDisabled(track));
-    track.on("enabled", (track: any) => trackEnabled(track));
   };
 
   const trackUnsubscribed = (track: any) => {
@@ -62,24 +61,12 @@ export default function ParticipantVideo({
       setVideoTracks((videoTracks: any) =>
         videoTracks.filter((v: any) => v !== track)
       );
+    } else if (track.kind === "audio") {
+      setAudioTracks((audioTracks: any) =>
+        audioTracks.filter((a: any) => a !== track)
+      );
     }
   };
-
-  const trackDisabled = (track: any) => {
-    track.on("disabled", () => {
-      if (track.kind === "video") {
-        setIsVideoEnabled(false);
-      }
-    });
-  };
-
-  function trackEnabled(track: any) {
-    track.on("enabled", () => {
-      if (track.kind === "video") {
-        setIsVideoEnabled(true);
-      }
-    });
-  }
 
   return (
     <div className={`relative ${className}`}>
@@ -89,6 +76,7 @@ export default function ParticipantVideo({
         playsInline
         autoPlay
       />
+      <audio ref={audioRef} autoPlay />
     </div>
   );
 }
