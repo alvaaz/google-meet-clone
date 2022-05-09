@@ -1,5 +1,5 @@
 import type { FC, Dispatch, SetStateAction } from "react";
-import { useState, createContext, useContext } from "react";
+import { useState, createContext, useContext, useCallback } from "react";
 import type Video from "twilio-video";
 import type { Participant } from "twilio-video";
 
@@ -11,7 +11,10 @@ type RoomState = {
   room: Video.Room | null;
   setRoom: Dispatch<SetStateAction<Video.Room | null>>;
   participantConnected: (participant: Participant) => void;
+  participantDisconnected: (participant: Participant) => void;
   participants: Participant[];
+  leaveRoom: () => void;
+  handleCallEnd: () => void;
 };
 
 function createCtx<RoomState>() {
@@ -32,9 +35,40 @@ export const RoomProvider: FC = ({ children }) => {
   const [userAudio, setUserAudio] = useState<boolean>(true);
   const [participants, setParticipants] = useState<Participant[]>([]);
 
+  const handleCallEnd = useCallback(() => {
+    setRoom((prevRoom) => {
+      if (prevRoom) {
+        prevRoom.localParticipant.tracks.forEach((trackPub) => {
+          // @ts-ignore
+          trackPub.track.stop();
+        });
+        prevRoom.disconnect();
+      }
+      return null;
+    });
+  }, []);
+
   const participantConnected = (participant: Participant) => {
     setParticipants((prevParticipants) => [...prevParticipants, participant]);
   };
+
+  function participantDisconnected(participant: Participant) {
+    setParticipants((prevParticipants) =>
+      prevParticipants.filter((p) => p !== participant)
+    );
+  }
+
+  function leaveRoom() {
+    if (!room || !room.localParticipant) return;
+    room.on("disconnected", (room) => {
+      room.localParticipant.tracks.forEach((publication) => {
+        // @ts-ignore
+        const attachedElements = publication.track.detach();
+        // @ts-ignore
+        attachedElements.forEach((element) => element.remove());
+      });
+    });
+  }
 
   const toggleUserVideo = () => {
     if (!room || !room.localParticipant) return;
@@ -75,6 +109,9 @@ export const RoomProvider: FC = ({ children }) => {
         userAudio,
         participantConnected,
         participants,
+        participantDisconnected,
+        leaveRoom,
+        handleCallEnd,
       }}
     >
       {children}

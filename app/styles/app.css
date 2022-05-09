@@ -660,6 +660,11 @@ Ensure the default browser behavior of the `hidden` attribute.
           animation: spin 1s linear infinite;
 }
 
+.animate-\[show_0\.4s_ease-in-out\] {
+  -webkit-animation: show 0.4s ease-in-out;
+          animation: show 0.4s ease-in-out;
+}
+
 .resize {
   resize: both;
 }
@@ -734,10 +739,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .overflow-hidden {
   overflow: hidden;
-}
-
-.overflow-scroll {
-  overflow: scroll;
 }
 
 .rounded-md {
@@ -972,6 +973,30 @@ Ensure the default browser behavior of the `hidden` attribute.
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+@-webkit-keyframes show {
+  0% {
+    opacity: 0;
+    transform: scale(0.4) translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes show {
+  0% {
+    opacity: 0;
+    transform: scale(0.4) translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .hover\:bg-indigo-700:hover {

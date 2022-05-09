@@ -69,9 +69,9 @@ export default function ParticipantVideo({
   };
 
   return (
-    <div className="relative align-middle self-center overflow-hidden inline-block">
+    <div className="relative align-middle self-center overflow-hidden inline-block animate-[show_0.4s_ease-in-out]">
       <video
-        className="absolute right-0 object-cover bottom-0 w-full h-full overflow-hidden left-0 top-0 background-cover bg-black"
+        className="absolute right-0 object-cover bottom-0 w-full h-full overflow-hidden left-0 top-0 background-cover bg-black rounded-lg"
         ref={videoRef}
         playsInline
         autoPlay

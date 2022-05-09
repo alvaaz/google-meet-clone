@@ -1,4 +1,3 @@
-import type { MutableRefObject } from "react";
 import { useEffect, useRef, useState } from "react";
 import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
@@ -19,8 +18,15 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
 export default function RoomCall() {
   const panel = useRef<HTMLDivElement | null>(null);
-  const { room, setRoom, participantConnected, participants } =
-    useRoomContext();
+  const {
+    room,
+    setRoom,
+    participantConnected,
+    participantDisconnected,
+    participants,
+    leaveRoom,
+    handleCallEnd,
+  } = useRoomContext();
   const { roomId, user } = useLoaderData();
 
   const [windowSize, setWindowSize] = useState<{
@@ -99,11 +105,37 @@ export default function RoomCall() {
   }, []);
 
   useEffect(() => {
+    leaveRoom();
     if (room) {
       room.on("participantConnected", participantConnected);
+      room.on("participantDisconnected", participantDisconnected);
       room.participants.forEach(participantConnected);
     }
+    return () => {
+      room?.off("participantConnected", participantConnected);
+      room?.off("participantDisconnected", participantDisconnected);
+    };
   }, [room]);
+
+  useEffect(() => {
+    const cleanup = (event: PageTransitionEventInit) => {
+      if (event.persisted) {
+        return;
+      }
+      if (room) {
+        handleCallEnd();
+      }
+    };
+
+    if (room) {
+      window.addEventListener("pagehide", cleanup);
+      window.addEventListener("beforeunload", cleanup);
+      return () => {
+        window.removeEventListener("pagehide", cleanup);
+        window.removeEventListener("beforeunload", cleanup);
+      };
+    }
+  }, [room, handleCallEnd]);
 
   const remoteParticipants = participants?.map((participant) => (
     <ParticipantVideo key={participant.sid} participant={participant} />
@@ -121,17 +153,6 @@ export default function RoomCall() {
             {remoteParticipants}
           </>
         )}
-        {/* {[...Array(10)].map(() => (
-          <div className="relative align-middle self-center overflow-hidden inline-block">
-            <video
-              className="absolute right-0 object-cover bottom-0 w-full h-full overflow-hidden left-0 top-0 background-cover bg-black"
-              playsInline
-              autoPlay
-              loop
-              src="/demo.mp4"
-            />
-          </div>
-        ))} */}
       </div>
       <CallFooter />
     </div>
