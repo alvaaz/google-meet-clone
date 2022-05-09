@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import type { MutableRefObject } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
@@ -17,9 +18,75 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 };
 
 export default function RoomCall() {
+  const panel = useRef<HTMLDivElement | null>(null);
   const { room, setRoom, participantConnected, participants } =
     useRoomContext();
   const { roomId, user } = useLoaderData();
+
+  const [windowSize, setWindowSize] = useState<{
+    width: null | number;
+    height: null | number;
+  }>({
+    width: null,
+    height: null,
+  });
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      function handleResize() {
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight - 96,
+        });
+      }
+
+      window.addEventListener("resize", handleResize);
+
+      handleResize();
+
+      return () => window.removeEventListener("resize", handleResize);
+    }
+  }, []);
+
+  function area(increment: number) {
+    let i = 0;
+    let w = 0;
+    let h = (increment * 9) / 16 + 10 * 2;
+    if (panel && panel.current && windowSize.width && windowSize.height) {
+      while (i < panel.current?.children.length) {
+        if (w + increment > windowSize.width) {
+          w = 0;
+          h = h + (increment * 9) / 16 + 10 * 2;
+        }
+        w = w + increment + 10 * 2;
+        i++;
+      }
+      if (h > windowSize.height || increment > windowSize.width) return false;
+      else return increment;
+    }
+  }
+
+  useEffect(() => {
+    let max = 0;
+    let i = 1;
+    while (i < 5000) {
+      let area2 = area(i);
+      if (area2 === false) {
+        max = i - 1;
+        break;
+      }
+      i++;
+    }
+
+    max = max - 10 * 2;
+
+    for (var s = 0; s < panel.current!.children.length; s++) {
+      let element = panel.current!.children[s] as HTMLDivElement;
+      element.style.margin = 10 + "px";
+      element.style.width = max + "px";
+      element.style.height = (max * 9) / 16 + "px";
+    }
+  }, [windowSize, participantConnected]);
 
   useEffect(() => {
     getToken(roomId, user).then((token) => {
@@ -44,78 +111,28 @@ export default function RoomCall() {
 
   return (
     <div className="bg-gray-900 h-screen grid grid-rows-[auto_min-content]">
-      {/* <div className="p-8 h-full">
-        <div className="h-full relative">
-          <div className="absolute w-full h-full">
-            <img
-              className="w-full h-full object-cover rounded-lg"
-              src="https://cdn.stocksnap.io/img-thumbs/960w/family-portrait_PMFIFSSCHD.jpg"
-              alt=""
+      <div
+        ref={panel}
+        className="overflow-hidden flex content-center flex-wrap items-center justify-center align-middle flex-1"
+      >
+        {room && (
+          <>
+            <ParticipantVideo participant={room?.localParticipant} />
+            {remoteParticipants}
+          </>
+        )}
+        {/* {[...Array(10)].map(() => (
+          <div className="relative align-middle self-center overflow-hidden inline-block">
+            <video
+              className="absolute right-0 object-cover bottom-0 w-full h-full overflow-hidden left-0 top-0 background-cover bg-black"
+              playsInline
+              autoPlay
+              loop
+              src="/demo.mp4"
             />
-            <span className="absolute left-4 bottom-4 text-white shadow-md z-10">
-              Tú
-            </span>
           </div>
-          <div className="absolute right-4 bottom-4 w-3/12">
-            <img
-              className="object-cover rounded-lg"
-              src="https://cdn.stocksnap.io/img-thumbs/960w/family-portrait_PMFIFSSCHD.jpg"
-              alt=""
-            />
-            <span className="absolute left-4 bottom-4 text-white shadow-md z-10">
-              Tú
-            </span>
-          </div>
-        </div>
-      </div> */}
-
-      {/* <div className="p-8 grid place-content-center">
-        <div className="overflow-hidden relative grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="relative ">
-            <img
-              className="object-cover rounded-lg"
-              src="https://cdn.stocksnap.io/img-thumbs/960w/family-portrait_PMFIFSSCHD.jpg"
-              alt=""
-            />
-            <span className="absolute left-4 bottom-4 text-white shadow-md z-10">
-              Tú
-            </span>
-          </div>
-          <div className="relative ">
-            <img
-              className="object-cover rounded-lg"
-              src="https://cdn.stocksnap.io/img-thumbs/960w/family-portrait_PMFIFSSCHD.jpg"
-              alt=""
-            />
-            <span className="absolute left-4 bottom-4 text-white shadow-md z-10">
-              Tú
-            </span>
-          </div>
-        </div>
-      </div> */}
-
-      <div className="p-8 grid place-content-center">
-        <div className="overflow-hidden relative grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {room && (
-            <>
-              <ParticipantVideo participant={room?.localParticipant} />
-              {remoteParticipants}
-            </>
-          )}
-        </div>
+        ))} */}
       </div>
-
-      {/* <div className="p-8 h-full">
-        <div className="h-full overflow-hidden relative grid grid-cols-2 gap-8">
-          {room && (
-            <>
-              <ParticipantVideo participant={room?.localParticipant} />
-              {remoteParticipants}
-            </>
-          )}
-        </div>
-      </div> */}
-
       <CallFooter />
     </div>
   );

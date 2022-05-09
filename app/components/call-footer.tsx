@@ -2,11 +2,11 @@ import { useRoomContext } from "~/context/RoomContext";
 import Icon from "./icons/";
 
 export default function CallFooter() {
-  const { toggleUserVideo, toggleUserAudio, userVideo, userAudio } =
+  const { toggleUserVideo, toggleUserAudio, userVideo, userAudio, room } =
     useRoomContext();
   return (
     <div className="flex justify-between px-6 py-6 items-center">
-      <p className="text-white">sdfsdfsdf</p>
+      <p className="text-white">{room?.name}</p>
       <div className="flex gap-3">
         <button
           className={`transition-all p-3 rounded-full ${
