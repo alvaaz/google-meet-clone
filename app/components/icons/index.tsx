@@ -5,6 +5,9 @@ import Users from "./Users";
 import Info from "./Info";
 import Video from "./Video";
 import Rooms from "./Rooms";
+import Secure from "./Secure";
+import Screen from "./Screen";
+import Chat from "./Chat";
 
 type Props = {
   name:
@@ -14,7 +17,10 @@ type Props = {
     | "users"
     | "info"
     | "video"
-    | "rooms";
+    | "rooms"
+    | "secure"
+    | "screen"
+    | "chat";
   className: string;
   off?: boolean;
 };
@@ -35,6 +41,12 @@ export default function Icon({ name, className, off }: Props): JSX.Element {
       return <Video className={className} />;
     case "rooms":
       return <Rooms className={className} />;
+    case "chat":
+      return <Chat className={className} />;
+    case "secure":
+      return <Secure className={className} />;
+    case "screen":
+      return <Screen className={className} />;
     default:
       return <p>There isn't icon</p>;
   }

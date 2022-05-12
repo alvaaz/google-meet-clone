@@ -65,32 +65,40 @@ export default function Index() {
               </div>
             </section>
             <section className="flex md:block items-start gap-4">
-              <Icon name="rooms" className="w-10 shrink-0 md:mb-4" />
+              <Icon name="secure" className="w-10 shrink-0 md:mb-4" />
               <div>
-                <h6 className="font-semibold text-lg">Salas ilimitadas</h6>
+                <h6 className="font-semibold text-lg">Seguridad de salas</h6>
                 <p className="text-gray-500">
-                  Crea todas las salas que quieras e invita a tus amigos con el
-                  código de seguridad.
+                  A través del código proporcionado puedes restringir el acceso.
                 </p>
               </div>
             </section>
             <section className="flex md:block items-start gap-4">
-              <Icon name="rooms" className="w-10 shrink-0 md:mb-4" />
+              <Icon name="screen" className="w-10 shrink-0 md:mb-4" />
               <div>
-                <h6 className="font-semibold text-lg">Salas ilimitadas</h6>
+                <h6 className="font-semibold text-lg mb-2">
+                  Comparte pantalla
+                </h6>
+                <p className="font-bold px-4 py-2 rounded text-indigo-600 uppercase text-xs bg-indigo-100 mb-2 inline-block">
+                  Proximamente
+                </p>
                 <p className="text-gray-500">
-                  Crea todas las salas que quieras e invita a tus amigos con el
-                  código de seguridad.
+                  Comparte esos apuntes importantes para la reunión. con esta
+                  característica.
                 </p>
               </div>
             </section>
             <section className="flex md:block items-start gap-4">
-              <Icon name="rooms" className="w-10 shrink-0 md:mb-4" />
+              <Icon name="chat" className="w-10 shrink-0 md:mb-4" />
+
               <div>
-                <h6 className="font-semibold text-lg">Salas ilimitadas</h6>
+                <h6 className="font-semibold text-lg mb-2">Chat en vivo</h6>
+                <p className="font-bold px-4 py-2 rounded text-indigo-600 uppercase text-xs bg-indigo-100 mb-2 inline-block">
+                  Proximamente
+                </p>
                 <p className="text-gray-500">
-                  Crea todas las salas que quieras e invita a tus amigos con el
-                  código de seguridad.
+                  Chatea con los participantes de tu reunión de una manera
+                  rápida y segura.
                 </p>
               </div>
             </section>
