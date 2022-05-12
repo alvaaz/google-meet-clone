@@ -40,17 +40,17 @@ export const register = async (form: RegisterForm) => {
     );
   }
 
-  return createUserSession(newUser.id, '/');
+  return createUserSession(newUser.id, '/home');
 };
 
 export const login = async (form: LoginForm) => {
   const user = await prisma.user.findUnique({ where: { email: form.email } });
 
   if (!user || !(await bcrypt.compare(form.password, user.password))) {
-    return json({ error: "Incorrect login" }, { status: 400 });
+    return json({ error: "Revisa tus credenciales." }, { status: 400 });
   }
 
-  return createUserSession(user.id, '/');
+  return createUserSession(user.id, '/home');
 };
 
 
@@ -106,7 +106,7 @@ export async function getUser(request: Request) {
 
 export async function logout(request: Request) {
   const session = await getUserSession(request);
-  return redirect("/login", {
+  return redirect("/", {
     headers: {
       "Set-Cookie": await storage.destroySession(session),
     }

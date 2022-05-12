@@ -112,8 +112,8 @@ export default function RoomCall() {
       room.participants.forEach(participantConnected);
     }
     return () => {
-      room?.off("participantConnected", participantConnected);
-      room?.off("participantDisconnected", participantDisconnected);
+      // room?.off("participantConnected", participantConnected);
+      // room?.off("participantDisconnected", participantDisconnected);
     };
   }, [room]);
 

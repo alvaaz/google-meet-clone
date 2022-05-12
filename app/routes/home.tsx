@@ -4,7 +4,7 @@ import type { ChangeEvent } from "react";
 import { useState } from "react";
 import { requireUserId } from "~/utils/auth.server";
 import { FormField } from "~/components/form-field";
-import { Form, useActionData } from "@remix-run/react";
+import { Form, Link, useActionData } from "@remix-run/react";
 import Button from "~/components/button";
 import Icon from "~/components/icons/";
 
@@ -70,13 +70,21 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen grid grid-rows-[min-content_auto] container mx-auto px-8">
-      <header className="py-4">
-        <nav className="flex justify-between">
-          <img className="w-10" src="./logo.png" alt="Logo Google Meet" />
+    <div className="h-screen grid grid-rows-[min-content_auto] container mx-auto px-5">
+      <header className="mb-24">
+        <nav className="flex justify-between items-center">
+          <Link
+            className="flex items-center gap-2 font-medium text-xl py-6"
+            to="/"
+          >
+            <img className="w-10" src="./logo.png" alt="Logo Google Meet" />
+            <p>Google Meet Clone</p>
+          </Link>
 
           <Form action="/logout" method="post">
-            <button type="submit">Salir</button>
+            <Button htmlType="submit" type="ghost">
+              Salir
+            </Button>
           </Form>
         </nav>
       </header>

@@ -138,7 +138,7 @@ export default function Register() {
             Regístrate
           </h2>
           <p className="mt-2 text-left text-sm text-gray-600">
-            Registrate para comenzar a usar Google Meet
+            Comienza a usar Google Meet ahora mismo.
           </p>
         </div>
         <Form method="post" className="mt-8 space-y-6" reloadDocument>
