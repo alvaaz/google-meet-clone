@@ -2,7 +2,7 @@ import { getUser } from "~/utils/auth.server";
 import type { LoaderFunction } from "@remix-run/node";
 import Button from "~/components/button";
 import Icon from "~/components/icons";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Form, Link, useLoaderData } from "@remix-run/react";
 
 export const loader: LoaderFunction = async ({ request }) => {
   let user = await getUser(request);
@@ -16,13 +16,23 @@ export default function Index() {
   return (
     <>
       <header className="mb-24 container mx-auto px-5">
-        <Link
-          className="flex items-center gap-2 font-medium text-xl mb-14 py-6"
-          to="/"
-        >
-          <img className="w-10" src="./logo.png" alt="Logo Google Meet" />
-          <p>Google Meet Clone</p>
-        </Link>
+        <nav className="flex justify-between items-center">
+          <Link
+            className="flex items-center gap-2 font-medium text-xl py-6"
+            to="/"
+          >
+            <img className="w-10" src="./logo.png" alt="Logo Google Meet" />
+            <p>Google Meet Clone</p>
+          </Link>
+
+          {data.user ? (
+            <Form action="/logout" method="post">
+              <Button htmlType="submit" type="ghost">
+                Salir
+              </Button>
+            </Form>
+          ) : null}
+        </nav>
         <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-x-8">
           <div className="md:basis-1/2">
             <h1 className="text-4xl font-semibold mb-8 md:text-5xl lg:text-6xl">
