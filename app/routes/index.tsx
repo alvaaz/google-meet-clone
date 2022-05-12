@@ -53,7 +53,7 @@ export default function Index() {
           ofrecemos.
         </p>
         <div className="flex md:gap-x-24 flex-col md:flex-row">
-          <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-y-12 md:gap-y-24 md:gap-x-16 mb-16 md:mb-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-y-12 md:gap-y-0 md:gap-x-16 mb-16 md:mb-0">
             <section className="flex md:block items-start gap-4">
               <Icon name="rooms" className="w-10 shrink-0 md:mb-4" />
               <div>
@@ -119,8 +119,16 @@ export default function Index() {
           <p className="text-white">Google Meet Clone</p>
         </Link>
         <p className="text-indigo-50 px-5">
-          Creado para la hackaton de Midudev. Hecho con 💛 con Remix, Prisma y
-          Twilio.
+          Creado para la{" "}
+          <a
+            href="https://github.com/midudev/google-meet-clone/blob/main/README.md"
+            target="_blank"
+            rel="noreferrer"
+            className="underline"
+          >
+            hackaton de midudev
+          </a>
+          . Hecho con 💛 con Remix, Prisma y Twilio.
         </p>
       </footer>
     </>
