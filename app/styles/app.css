@@ -1252,22 +1252,33 @@ Ensure the default browser behavior of the `hidden` attribute.
          column-gap: 6rem;
   }
 
+  .md\:gap-y-0 {
+    row-gap: 0px;
+  }
+
   .md\:gap-x-16 {
     -moz-column-gap: 4rem;
          column-gap: 4rem;
   }
 
-  .md\:gap-y-8 {
-    row-gap: 2rem;
-  }
-
-  .md\:gap-y-0 {
-    row-gap: 0px;
-  }
-
   .md\:text-5xl {
     font-size: 3rem;
     line-height: 1;
+  }
+
+  .md\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+
+  .md\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .md\:text-4xl {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
   }
 }
 

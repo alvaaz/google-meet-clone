@@ -44,11 +44,13 @@ export default function Index() {
         </div>
       </header>
       <main className="container mx-auto px-5 mb-24">
-        <p className="font-semibold text-indigo-600 mb-4">Características</p>
-        <h2 className="font-semibold text-3xl mb-3">
+        <p className="font-semibold text-indigo-600 mb-4 md:text-lg">
+          Características
+        </p>
+        <h2 className="font-semibold text-3xl md:text-4xl mb-3">
           Conoce todas las características
         </h2>
-        <p className="text-lg text-gray-500 mb-12 md:mb-24">
+        <p className="text-lg md:text-xl text-gray-500 mb-12 md:mb-24">
           Sácale el máximo provecho a todas las funcionalidades que te
           ofrecemos.
         </p>
@@ -57,8 +59,10 @@ export default function Index() {
             <section className="flex md:block items-start gap-4">
               <Icon name="rooms" className="w-10 shrink-0 md:mb-4" />
               <div>
-                <h6 className="font-semibold text-lg">Salas ilimitadas</h6>
-                <p className="text-gray-500">
+                <h6 className="font-semibold text-lg md:text-xl mb-2">
+                  Salas ilimitadas
+                </h6>
+                <p className="text-gray-500 md:text-lg">
                   Crea todas las salas que quieras e invita a tus amigos con el
                   código de seguridad.
                 </p>
@@ -67,8 +71,10 @@ export default function Index() {
             <section className="flex md:block items-start gap-4">
               <Icon name="secure" className="w-10 shrink-0 md:mb-4" />
               <div>
-                <h6 className="font-semibold text-lg">Seguridad de salas</h6>
-                <p className="text-gray-500">
+                <h6 className="font-semibold text-lg md:text-xl mb-2">
+                  Seguridad de salas
+                </h6>
+                <p className="text-gray-500 md:text-lg">
                   A través del código proporcionado puedes restringir el acceso.
                 </p>
               </div>
@@ -76,14 +82,14 @@ export default function Index() {
             <section className="flex md:block items-start gap-4">
               <Icon name="screen" className="w-10 shrink-0 md:mb-4" />
               <div>
-                <h6 className="font-semibold text-lg mb-2">
+                <h6 className="font-semibold text-lg md:text-xl mb-2">
                   Comparte pantalla
                 </h6>
                 <p className="font-bold px-4 py-2 rounded text-indigo-600 uppercase text-xs bg-indigo-100 mb-2 inline-block">
                   Proximamente
                 </p>
-                <p className="text-gray-500">
-                  Comparte esos apuntes importantes para la reunión. con esta
+                <p className="text-gray-500 md:text-lg">
+                  Comparte esos apuntes importantes para la reunión con esta
                   característica.
                 </p>
               </div>
@@ -92,11 +98,13 @@ export default function Index() {
               <Icon name="chat" className="w-10 shrink-0 md:mb-4" />
 
               <div>
-                <h6 className="font-semibold text-lg mb-2">Chat en vivo</h6>
+                <h6 className="font-semibold text-lg md:text-xl mb-2">
+                  Chat en vivo
+                </h6>
                 <p className="font-bold px-4 py-2 rounded text-indigo-600 uppercase text-xs bg-indigo-100 mb-2 inline-block">
                   Proximamente
                 </p>
-                <p className="text-gray-500">
+                <p className="text-gray-500 md:text-lg">
                   Chatea con los participantes de tu reunión de una manera
                   rápida y segura.
                 </p>
@@ -122,13 +130,31 @@ export default function Index() {
           Creado para la{" "}
           <a
             href="https://github.com/midudev/google-meet-clone/blob/main/README.md"
+            rel="noreferrer"
+            target="_blank"
+            className="underline"
+          >
+            hackaton
+          </a>{" "}
+          de{" "}
+          <a
+            href="https://www.twitch.tv/midudev"
             target="_blank"
             rel="noreferrer"
             className="underline"
           >
-            hackaton de midudev
-          </a>
-          . Hecho con 💛 con Remix, Prisma y Twilio.
+            midudev
+          </a>{" "}
+          . Hecho con 💛 por{" "}
+          <a
+            href="https://goede.cl"
+            target="_blank"
+            className="underline"
+            rel="noreferrer"
+          >
+            @alvaaz
+          </a>{" "}
+          con Remix, Prisma y Twilio.
         </p>
       </footer>
     </>
