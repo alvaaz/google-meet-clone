@@ -579,6 +579,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-top: 2rem;
 }
 
+.mb-32 {
+  margin-bottom: 8rem;
+}
+
+.mb-28 {
+  margin-bottom: 7rem;
+}
+
 .block {
   display: block;
 }
@@ -657,6 +665,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .basis-full {
   flex-basis: 100%;
+}
+
+.basis-1\/2 {
+  flex-basis: 50%;
 }
 
 @-webkit-keyframes spin {
@@ -853,6 +865,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .stroke-white {
   stroke: #fff;
+}
+
+.object-contain {
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .object-cover {
@@ -1195,6 +1212,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .md\:mb-4 {
     margin-bottom: 1rem;
+  }
+
+  .md\:mb-32 {
+    margin-bottom: 8rem;
   }
 
   .md\:block {

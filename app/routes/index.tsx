@@ -16,7 +16,7 @@ export default function Index() {
   return (
     <>
       <header className="mb-24 container mx-auto px-5">
-        <nav className="flex justify-between items-center">
+        <nav className="flex justify-between items-center mb-28">
           <Link
             className="flex items-center gap-2 font-medium text-xl py-6"
             to="/"
@@ -46,11 +46,13 @@ export default function Index() {
             </Button>
           </div>
 
-          <img
-            className="w-full h-full object-cover md:basis-1/2"
-            src="/hero.png"
-            alt="Speakers in a videocall"
-          />
+          <div className="md:basis-1/2">
+            <img
+              className="w-full h-full object-cover"
+              src="/hero.png"
+              alt="Speakers in a videocall"
+            />
+          </div>
         </div>
       </header>
       <main className="container mx-auto px-5 mb-24">
@@ -121,11 +123,13 @@ export default function Index() {
               </div>
             </section>
           </div>
-          <img
-            className="md:basis-1/3 w-full h-full md:hidden lg:inline"
-            src="/hero2.png"
-            alt=""
-          />
+          <div className="md:basis-1/3 rounded-lg overflow-hidden">
+            <img
+              className="w-full h-full object-cover md:hidden lg:inline"
+              src="/hero2.png"
+              alt=""
+            />
+          </div>
         </div>
       </main>
       <footer className="bg-indigo-600 text-center py-10">
